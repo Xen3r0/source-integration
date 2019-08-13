@@ -196,7 +196,7 @@ class SourceBitBucketPlugin extends MantisSourcePlugin {
         }
 
         if( property_exists( $t_json, 'next' ) ) {
-            $values = array_merge($values, $this->api_json_url_values( $p_repo, $t_json->next ));
+            $values = array_merge( $values, $this->api_json_url_values( $p_repo, $t_json->next ) );
         }
 
         return $values;
@@ -231,16 +231,16 @@ class SourceBitBucketPlugin extends MantisSourcePlugin {
         $t_reponame = $p_repo->info['bit_reponame'];
 
 		if( $t_branch != '*' ) {
-            $t_uri      = $this->api_url20( "repositories/$t_username/$t_reponame/refs/branches" );
-			$t_branch   = $this->api_json_url( $p_repo, $t_uri );
-            $t_branches[$t_branch->hash] = $t_branch->name;
+			$t_uri                          = $this->api_url20( "repositories/$t_username/$t_reponame/refs/branches" );
+			$t_branch                       = $this->api_json_url( $p_repo, $t_uri );
+			$t_branches[$t_branch->hash]    = $t_branch->name;
 		} else {
-			$t_uri      = $this->api_url20( "repositories/$t_username/$t_reponame/refs/branches" );
-			$t_json     = $this->api_json_url_values( $p_repo, $t_uri, true );
+			$t_uri  = $this->api_url20( "repositories/$t_username/$t_reponame/refs/branches" );
+			$t_json = $this->api_json_url_values( $p_repo, $t_uri, true );
 			$t_branches = array();
-			foreach ( $t_json as $t_branch ) {
-                if( isset( $t_branch->target ) && isset( $t_branch->target->hash ) && isset( $t_branch->name ) && !isset( $t_branches[$t_branch->hash] ) ) {
-                    $t_branches[$t_branch->target->hash] = $t_branch->name;
+			foreach( $t_json as $t_branch ) {
+				if( isset($t_branch->target) && isset($t_branch->target->hash) && isset($t_branch->name) && !isset($t_branches[$t_branch->hash]) ) {
+					$t_branches[$t_branch->target->hash] = $t_branch->name;
 				}
 			}
 		}
@@ -316,8 +316,8 @@ class SourceBitBucketPlugin extends MantisSourcePlugin {
 			echo "Retrieving $t_commit_id ... ";
 			$t_json = null;
 			if( empty($this->commits_cache[$t_commit_id]) ) {
-                $t_url  = $this->api_url20( "repositories/$t_username/$t_reponame/diffstat/$t_commit_id" );
-                $t_json = $this->api_json_url( $p_repo, $t_url );
+				$t_url  = $this->api_url20( "repositories/$t_username/$t_reponame/diffstat/$t_commit_id" );
+				$t_json = $this->api_json_url( $p_repo, $t_url );
 			} else {
 				$t_json = $this->commits_cache[$t_commit_id];
 			}
