@@ -190,7 +190,7 @@ class SourceBitBucketPlugin extends MantisSourcePlugin {
         $values = [];
 
         if( property_exists( $t_json, 'values' ) ) {
-            foreach ( $t_json->values as $t_item ) {
+            foreach( $t_json->values as $t_item ) {
                 $values[] = $t_item;
             }
         }
